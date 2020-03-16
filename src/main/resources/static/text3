@@ -1,0 +1,7 @@
+阿里云搭建ngrok
+1. 服务端启动
+进入ngrok目录执行：
+./bin/ngrokd -tlsKey="assets/server/tls/snakeoil.key" -tlsCrt="assets/server/tls/snakeoil.crt"  -domain="beepw.com" -httpAddr=":80" -httpsAddr=":443" -tunnelAddr=":4443"
+客户端配置：新建ngrok.cfg(输入：server_addr: "beepw.com:4443"
+                                trust_host_root_certs: false)
+ 客户端启动问价：新建ngrok.bat(输入：ngrok -config=ngrok.cfg -log=ngrok.log -subdomain test 9527【其中test为自定义域名，9527为本地代理（要访问的）端口】)
