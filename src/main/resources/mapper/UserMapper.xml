@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.Dao.UserDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.Entity.User">
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="phone" jdbcType="VARCHAR" property="phone"/>
+        <result column="group_id" jdbcType="VARCHAR" property="groupId"/>
+    </resultMap>
+    <insert id="insert">
+      INSERT INTO s_user
+      (
+      user_name,
+      phone,
+      group_id)
+      VALUE (
+      #{userName},
+      #{phone},
+      #{groupId}
+   )
+  </insert>
+
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select *
+        from s_user
+        where 1 =1
+        <if test="userName!=null and userName !=''">
+            and user_name LIKE CONCAT(CONCAT('%', #{userName}), '%')
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="java.util.Map">
+      delete
+      from s_user
+      where id = #{id}
+    </delete>
+
+    <update id="updateMsg">
+        update s_user
+        <set>
+            <if test="userName!=null and userName!=''">
+                user_name = #{userName},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
+            </if>
+            <if test="groupId!=null and groupId!=''">
+                group_id = #{groupId}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

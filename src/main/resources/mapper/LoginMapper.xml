@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.Dao.LoginDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.Entity.Login">
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+    </resultMap>
+    <insert id="insert">
+      INSERT INTO login
+      (
+      user_name,
+      password,
+      create_date,
+      create_by)
+      VALUE (
+      #{userName},
+      #{password},
+      #{createDate},
+      #{createBy}
+   )
+  </insert>
+
+    <select id="findAll" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select *
+        from login
+        where 1 =1
+        <if test="userName!=null and userName !=''">
+            and user_name LIKE CONCAT(CONCAT('%', #{userName}), '%')
+        </if>
+    </select>
+
+    <delete id="delete" parameterType="java.util.Map">
+      delete
+      from login
+      where id = #{id}
+    </delete>
+
+    <select id="findOne" parameterType="java.util.Map" resultMap="BaseResultMap">
+        select *
+        from login
+        where user_name = #{userName}
+    </select>
+</mapper>
